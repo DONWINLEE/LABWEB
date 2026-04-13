@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sustainable Geotechnology Laboratory | NTU Singapore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #1a2744; --accent: #c8102e;
+      --gray-50: #f8f8f6; --gray-100: #f0efec; --gray-200: #e2e1dc;
+      --gray-400: #9e9c96; --gray-600: #5a5855; --text: #1a1917;
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans: 'Source Sans 3', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); color: var(--text); background: #fff; font-size: 16px; line-height: 1.7; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--gray-200); }
+    .nav-inner { max-width: 1120px; margin: 0 auto; padding: 0 2rem; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--navy); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.82rem; font-weight: 500; color: var(--gray-600); text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--navy); }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
+    .nav-toggle span { width: 22px; height: 1.5px; background: var(--navy); display: block; }
+
+    /* HERO — fixed two-panel, no overlap */
+    #home { min-height: 88vh; display: grid; grid-template-columns: 55% 45%; }
+
+    .hero-left { background: var(--gray-50); display: flex; align-items: center; padding: 5rem 3rem 5rem 5vw; }
+    .hero-left-content { max-width: 480px; }
+
+    .hero-right {
+      background: var(--navy);
+      display: flex; align-items: center;
+      padding: 5rem 5vw 5rem 3rem;
+      clip-path: polygon(6% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    .section-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); margin-bottom: 0.8rem; }
+
+    .hero-left-content h1 { font-family: var(--serif); font-size: clamp(2rem, 3vw, 2.9rem); font-weight: 500; line-height: 1.18; color: var(--navy); margin-bottom: 0.8rem; }
+    .hero-left-content h1 em { color: var(--accent); font-style: normal; }
+    .hero-tagline { font-size: 0.92rem; color: var(--gray-600); font-weight: 300; letter-spacing: 0.01em; margin-bottom: 2rem; font-style: italic; }
+    .hero-affil { display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--gray-600); padding-top: 1.5rem; border-top: 1px solid var(--gray-200); }
+    .hero-affil::before { content: ''; width: 2rem; height: 1px; background: var(--accent); flex-shrink: 0; }
+
+    /* Stats fully inside navy, shifted right to clear the diagonal */
+    .hero-stats { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding-left: 2.5rem; }
+    .stat-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.13); border-radius: 4px; padding: 1.6rem 1rem; text-align: center; }
+    .stat-card .num { font-family: var(--serif); font-size: 2.4rem; font-weight: 500; color: #fff; line-height: 1; display: block; }
+    .stat-card .num sup { font-size: 1.1rem; }
+    .stat-card .label { font-size: 0.72rem; color: rgba(255,255,255,0.48); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.45rem; display: block; }
+
+    /* SECTIONS */
+    section { padding: 5rem 0; }
+    .section-inner { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
+    .section-header { margin-bottom: 3rem; }
+    .section-title { font-family: var(--serif); font-size: clamp(1.8rem, 2.8vw, 2.5rem); font-weight: 500; color: var(--navy); line-height: 1.2; }
+    .section-line { width: 3rem; height: 2px; background: var(--accent); margin-top: 1rem; }
+
+    /* ABOUT */
+    #about { background: #fff; }
+    .about-grid { display: grid; grid-template-columns: 220px 1fr; gap: 4rem; align-items: start; }
+    .pi-card { position: sticky; top: 80px; text-align: center; }
+    .pi-photo { width: 100%; aspect-ratio: 4/5; background: var(--navy); border-radius: 4px; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.2); font-family: var(--serif); font-size: 3.5rem; overflow: hidden; }
+    .pi-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .pi-card h3 { font-family: var(--serif); font-size: 1.25rem; font-weight: 500; color: var(--navy); }
+    .pi-card .pi-title { font-size: 0.78rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin: 0.3rem 0 0.5rem; }
+    .pi-card .pi-dept { font-size: 0.8rem; color: var(--gray-600); line-height: 1.5; }
+    .pi-links { display: flex; gap: 0.4rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap; }
+    .pi-link { font-size: 0.73rem; padding: 0.28rem 0.7rem; border: 1px solid var(--gray-200); border-radius: 2px; color: var(--gray-600); text-decoration: none; transition: all 0.2s; }
+    .pi-link:hover { border-color: var(--navy); color: var(--navy); }
+
+    .bio-content p { font-size: 0.93rem; color: var(--gray-600); line-height: 1.85; margin-bottom: 1.2rem; }
+    .bio-content p:first-child { font-size: 1rem; color: var(--text); }
+    .bio-badges { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 1.5rem 0; }
+    .badge { font-size: 0.77rem; padding: 0.28rem 0.75rem; border-radius: 2px; background: var(--gray-100); color: var(--gray-600); }
+    .bio-edu { margin-top: 2rem; }
+    .bio-edu h4 { font-family: var(--serif); font-size: 1rem; font-weight: 500; color: var(--navy); margin-bottom: 1rem; }
+    .edu-list { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .edu-list li { font-size: 0.875rem; color: var(--gray-600); display: flex; gap: 1rem; }
+    .edu-list .yr { color: var(--accent); font-weight: 500; min-width: 5rem; flex-shrink: 0; }
+
+    /* RESEARCH */
+    #research { background: var(--gray-50); }
+    .research-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .research-card { background: #fff; border: 1px solid var(--gray-200); border-radius: 4px; padding: 1.75rem; transition: border-color 0.2s, box-shadow 0.2s; }
+    .research-card:hover { border-color: var(--navy); box-shadow: 0 4px 20px rgba(26,39,68,0.07); }
+    .research-icon { width: 36px; height: 36px; margin-bottom: 1.1rem; }
+    .research-card h3 { font-family: var(--serif); font-size: 1.12rem; font-weight: 500; color: var(--navy); margin-bottom: 0.55rem; }
+    .research-card p { font-size: 0.865rem; color: var(--gray-600); line-height: 1.7; }
+
+    /* TEAM */
+    #team { background: #fff; }
+    .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+    .member-card { text-align: center; }
+    .member-photo { width: 100%; aspect-ratio: 1; background: var(--navy); border-radius: 4px; margin-bottom: 0.9rem; overflow: hidden; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.22); font-family: var(--serif); font-size: 2rem; }
+    .member-card h4 { font-family: var(--serif); font-size: 0.93rem; font-weight: 500; color: var(--navy); margin-bottom: 0.2rem; }
+    .member-card .role { font-size: 0.72rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.2rem; }
+    .member-card .field { font-size: 0.77rem; color: var(--gray-400); }
+
+    /* PUBLICATIONS */
+    #publications { background: var(--gray-50); }
+    .pub-list { list-style: none; }
+    .pub-item { padding: 1.5rem 0; border-bottom: 1px solid var(--gray-100); display: grid; grid-template-columns: 3.5rem 1fr; gap: 1.5rem; }
+    .pub-year { font-family: var(--serif); font-size: 1.4rem; color: var(--gray-200); font-weight: 500; line-height: 1; padding-top: 0.3rem; }
+    .pub-content h4 { font-size: 0.92rem; font-weight: 500; color: var(--navy); margin-bottom: 0.28rem; line-height: 1.45; }
+    .pub-authors { font-size: 0.82rem; color: var(--gray-600); margin-bottom: 0.22rem; }
+    .pub-authors strong { color: var(--navy); font-weight: 500; }
+    .pub-venue { font-size: 0.79rem; color: var(--accent); font-style: italic; }
+    .pub-tags { display: flex; gap: 0.4rem; margin-top: 0.5rem; flex-wrap: wrap; }
+    .tag { font-size: 0.69rem; padding: 0.16rem 0.5rem; border-radius: 2px; background: var(--gray-100); color: var(--gray-600); }
+    .pub-more { margin-top: 1.5rem; font-size: 0.84rem; color: var(--gray-600); }
+    .pub-more a { color: var(--accent); }
+
+    /* NEWS */
+    #news { background: #fff; }
+    .news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .news-card { border: 1px solid var(--gray-200); border-radius: 4px; padding: 1.6rem; }
+    .news-date { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.55rem; }
+    .news-card h4 { font-family: var(--serif); font-size: 1.02rem; font-weight: 500; color: var(--navy); margin-bottom: 0.4rem; line-height: 1.35; }
+    .news-card p { font-size: 0.84rem; color: var(--gray-600); }
+
+    /* CONTACT */
+    #contact { background: var(--navy); color: #fff; }
+    #contact .section-title { color: #fff; }
+    #contact .section-label { color: rgba(255,255,255,0.42); }
+    #contact .section-line { background: rgba(255,255,255,0.22); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+    .contact-desc { font-size: 0.91rem; color: rgba(255,255,255,0.58); line-height: 1.85; margin-top: 1.5rem; }
+    .contact-info-list { margin-top: 2rem; list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+    .contact-info-list li { display: flex; gap: 1rem; font-size: 0.875rem; }
+    .ci-label { min-width: 4rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.36); padding-top: 0.18rem; flex-shrink: 0; }
+    .ci-value { color: rgba(255,255,255,0.8); }
+    .ci-value a { color: rgba(255,255,255,0.8); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.18); }
+    .ci-value a:hover { color: #fff; border-color: #fff; }
+    .join-box { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.11); border-radius: 4px; padding: 2.25rem; }
+    .join-box h3 { font-family: var(--serif); font-size: 1.45rem; color: #fff; margin-bottom: 1rem; }
+    .join-box p { font-size: 0.865rem; color: rgba(255,255,255,0.56); line-height: 1.8; margin-bottom: 1.2rem; }
+    .btn { display: inline-block; padding: 0.62rem 1.5rem; font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; border-radius: 2px; text-decoration: none; transition: all 0.2s; }
+    .btn-white { background: #fff; color: var(--navy); border: 1px solid #fff; }
+    .btn-white:hover { background: transparent; color: #fff; }
+
+    /* FOOTER */
+    footer { background: #0d1528; color: rgba(255,255,255,0.3); padding: 1.5rem 2rem; text-align: center; font-size: 0.77rem; }
+    footer a { color: rgba(255,255,255,0.45); text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      #home { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { clip-path: none; padding: 3rem 2rem; }
+      .hero-stats { padding-left: 0; }
+      .about-grid { grid-template-columns: 1fr; }
+      .pi-card { position: static; display: grid; grid-template-columns: 120px 1fr; gap: 1.5rem; text-align: left; }
+      .pi-card .pi-photo { width: 120px; aspect-ratio: 1; }
+      .pi-links { justify-content: flex-start; }
+      .research-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .news-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nav-links { display: none; position: absolute; top: 60px; left: 0; right: 0; background: #fff; flex-direction: column; padding: 1.5rem 2rem; gap: 1.25rem; border-bottom: 1px solid var(--gray-200); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: flex; }
+    }
+    @media (max-width: 600px) {
+      .research-grid, .news-grid { grid-template-columns: 1fr; }
+      section { padding: 3.5rem 0; }
+      .hero-left { padding: 3rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#home">Yi<span> · </span>Research Group</a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#team">People</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-left">
+    <div class="hero-left-content">
+      <div class="section-label">Sustainable Geotechnology Laboratory · NTU Singapore</div>
+      <h1>Advancing <em>Sustainable</em> Solutions in Geotechnical Engineering</h1>
+      <p class="hero-tagline">Geotechnics &nbsp;·&nbsp; Sustainable Materials &nbsp;·&nbsp; Geo-Environmental Engineering</p>
+      <div class="hero-affil">
+        School of Civil and Environmental Engineering &nbsp;·&nbsp; Nanyang Technological University
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stats">
+      <div class="stat-card">
+        <span class="num">4,700<sup>+</sup></span>
+        <span class="label">Citations</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">100<sup>+</sup></span>
+        <span class="label">Publications</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">$61M</span>
+        <span class="label">Lab Funding</span>
+      </div>
+      <div class="stat-card">
+        <span class="num">3</span>
+        <span class="label">Editorial Roles</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">Principal Investigator</div>
+      <h2 class="section-title">About</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="pi-card">
+        <div class="pi-photo">YY</div>
+        <h3>Yi Yaolin</h3>
+        <div class="pi-title">Associate Professor</div>
+        <div class="pi-dept">School of Civil and Environmental Engineering<br>Nanyang Technological University</div>
+        <div class="pi-links">
+          <a class="pi-link" href="mailto:yiyaolin@ntu.edu.sg">Email</a>
+          <a class="pi-link" href="https://dr.ntu.edu.sg/cris/rp/rp01036" target="_blank">DR-NTU</a>
+          <a class="pi-link" href="https://scholar.google.com/citations?user=m9twpBIAAAAJ" target="_blank">Scholar</a>
+        </div>
+      </div>
+      <div class="bio-content">
+        <p>Dr. Yi Yaolin is an Associate Professor in the School of Civil and Environmental Engineering at Nanyang Technological University (NTU), Singapore. He was the Deputy Co-Director of the Surbana Jurong–NTU Corporate Laboratory (2022–2024), a $61 million initiative developing next-generation sustainable solutions for complex urban and industrial challenges.</p>
+        <p>Dr. Yi's research centres on improving sustainability in geotechnical engineering through interdisciplinary approaches that bridge geotechnical engineering, materials engineering, and environmental engineering. His group focuses on sustainable geo-materials, geo-environmental engineering, and advanced ground improvement technologies.</p>
+        <p>He serves as Associate Editor for the <em>Journal of Materials in Civil Engineering</em> (ASCE), and as Editorial Board Member for <em>Geotechnical Engineering</em> (ICE) and <em>Ground Improvement</em> (ICE). He is Secretary of the ISSMGE Technical Committee on Sustainability in Geotechnical Engineering (TC307), a member of the ASCE Geo-Institute Soil Improvement Committee, and a member of the Singapore Standards Council Technical Committee on Civil and Geotechnical Work.</p>
+        <div class="bio-badges">
+          <span class="badge">Geotechnical Engineering</span>
+          <span class="badge">Sustainable Construction Materials</span>
+          <span class="badge">Solid Waste Treatment</span>
+          <span class="badge">Carbonation &amp; CO₂ Sequestration</span>
+          <span class="badge">Ground Improvement</span>
+          <span class="badge">Marine Geotechnology</span>
+        </div>
+        <div class="bio-edu">
+          <h4>Education &amp; Career</h4>
+          <ul class="edu-list">
+            <li><span class="yr">2016 – present</span><span>Associate Professor, Nanyang Technological University, Singapore</span></li>
+            <li><span class="yr">2022 – 2024</span><span>Deputy Co-Director, Surbana Jurong–NTU Corporate Laboratory</span></li>
+            <li><span class="yr">2013 – 2016</span><span>Postdoctoral Fellow, University of Alberta, Canada</span></li>
+            <li><span class="yr">2009 – 2010</span><span>Academic Visitor, University of Cambridge, UK</span></li>
+            <li><span class="yr">2013</span><span>PhD, Geotechnical Engineering, Southeast University, China</span></li>
+            <li><span class="yr">2008</span><span>M.E., Southeast University, China</span></li>
+            <li><span class="yr">2004</span><span>B.E., Southeast University, China</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">Research</div>
+      <h2 class="section-title">Research Areas</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="research-grid">
+      <div class="research-card">
+        <svg class="research-icon" viewBox="0 0 38 38" fill="none">
+          <rect x="4" y="10" width="30" height="18" rx="1" stroke="#1a2744" stroke-width="1.4" fill="none"/>
+          <path d="M4 20 Q12 14 19 20 Q26 26 34 20" stroke="#c8102e" stroke-width="1.4" fill="none"/>
+        </svg>
+        <h3>Sustainable Geotechnology</h3>
+        <p>Eco-efficient ground improvement using industrial by-products and wastes, reducing carbon footprint in geotechnical and foundation engineering.</p>
+      </div>
+      <div class="research-card">
+        <svg class="research-icon" viewBox="0 0 38 38" fill="none">
+          <circle cx="19" cy="19" r="12" stroke="#1a2744" stroke-width="1.4" fill="none"/>
+          <path d="M12 26 Q15 16 19 14 Q23 12 26 20" stroke="#c8102e" stroke-width="1.4" fill="none"/>
+          <circle cx="19" cy="14" r="2" fill="#1a2744"/>
+        </svg>
+        <h3>Hazardous Waste Treatment</h3>
+        <p>Treatment and valorisation of hazardous industrial wastes including contaminated soils, heavy-metal-bearing sludges, and mine tailings.</p>
+      </div>
+      <div class="research-card">
+        <svg class="research-icon" viewBox="0 0 38 38" fill="none">
+          <path d="M4 28 Q10 20 16 24 Q22 28 28 18 Q31 12 34 14" stroke="#1a2744" stroke-width="1.4" fill="none"/>
+          <line x1="4" y1="32" x2="34" y2="32" stroke="#c8102e" stroke-width="1.4"/>
+        </svg>
+        <h3>Coastal Protection Materials</h3>
+        <p>Durable, corrosion-resistant materials for coastal and marine geotechnical applications to address sea-level rise and coastal infrastructure challenges.</p>
+      </div>
+      <div class="research-card">
+        <svg class="research-icon" viewBox="0 0 38 38" fill="none">
+          <circle cx="19" cy="19" r="11" stroke="#1a2744" stroke-width="1.4" fill="none" stroke-dasharray="4,2"/>
+          <path d="M12 26 L19 10 L26 26" stroke="#c8102e" stroke-width="1.4" stroke-linejoin="round" fill="none"/>
+          <line x1="14" y1="22" x2="24" y2="22" stroke="#c8102e" stroke-width="1.2"/>
+        </svg>
+        <h3>Carbonation &amp; CO₂ Sequestration</h3>
+        <p>Harnessing carbonation reactions for carbon capture, strength enhancement, and hazard mitigation in reactive construction materials.</p>
+      </div>
+      <div class="research-card">
+        <svg class="research-icon" viewBox="0 0 38 38" fill="none">
+          <rect x="6" y="22" width="26" height="10" rx="1" stroke="#1a2744" stroke-width="1.4" fill="none"/>
+          <line x1="13" y1="22" x2="11" y2="8" stroke="#1a2744" stroke-width="1.4"/>
+          <line x1="25" y1="22" x2="27" y2="8" stroke="#1a2744" stroke-width="1.4"/>
+          <line x1="11" y1="8" x2="27" y2="8" stroke="#c8102e" stroke-width="1.4"/>
+        </svg>
+        <h3>Deep Soil Mixing</h3>
+        <p>Innovative binders and mixing techniques for soft ground improvement and low-permeability cut-off wall construction in urban and coastal settings.</p>
+      </div>
+      <div class="research-card">
+        <svg class="research-icon" viewBox="0 0 38 38" fill="none">
+          <path d="M7 30 C7 17 12 8 19 8 C26 8 31 17 31 30" stroke="#1a2744" stroke-width="1.4" fill="none"/>
+          <path d="M11 30 C11 20 14 14 19 14 C24 14 27 20 27 30" stroke="#c8102e" stroke-width="1.2" fill="none"/>
+          <line x1="7" y1="30" x2="31" y2="30" stroke="#1a2744" stroke-width="1.4"/>
+        </svg>
+        <h3>Geo-Environmental Engineering</h3>
+        <p>Interdisciplinary research linking geotechnical, environmental, and materials engineering for contaminated land, landfill, and marine environments.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">People</div>
+      <h2 class="section-title">Research Group</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="team-grid">
+      <div class="member-card">
+        <div class="member-photo">YY</div>
+        <h4>Yi Yaolin</h4>
+        <div class="role">Principal Investigator</div>
+        <div class="field">Sustainable Geotechnology</div>
+      </div>
+      <div class="member-card">
+        <div class="member-photo">–</div>
+        <h4>To be updated</h4>
+        <div class="role">Postdoc</div>
+        <div class="field">–</div>
+      </div>
+      <div class="member-card">
+        <div class="member-photo">–</div>
+        <h4>To be updated</h4>
+        <div class="role">PhD Candidate</div>
+        <div class="field">–</div>
+      </div>
+      <div class="member-card">
+        <div class="member-photo">–</div>
+        <h4>To be updated</h4>
+        <div class="role">PhD Candidate</div>
+        <div class="field">–</div>
+      </div>
+      <div class="member-card">
+        <div class="member-photo">–</div>
+        <h4>To be updated</h4>
+        <div class="role">PhD Candidate</div>
+        <div class="field">–</div>
+      </div>
+      <div class="member-card">
+        <div class="member-photo">–</div>
+        <h4>To be updated</h4>
+        <div class="role">MSc / MEng</div>
+        <div class="field">–</div>
+      </div>
+      <div class="member-card">
+        <div class="member-photo">–</div>
+        <h4>To be updated</h4>
+        <div class="role">MSc / MEng</div>
+        <div class="field">–</div>
+      </div>
+      <div class="member-card">
+        <div class="member-photo" style="font-family:var(--sans);font-size:1rem;">Open</div>
+        <h4>Join Us</h4>
+        <div class="role">Positions Open</div>
+        <div class="field">PhD · Postdoc</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">Publications</div>
+      <h2 class="section-title">Selected Publications</h2>
+      <div class="section-line"></div>
+    </div>
+    <ul class="pub-list">
+      <li class="pub-item">
+        <div class="pub-year">2024</div>
+        <div class="pub-content">
+          <h4>Publication title — to be updated</h4>
+          <div class="pub-authors"><strong>Yi Y</strong>, Author B, Author C</div>
+          <div class="pub-venue">Journal Name, Vol(Issue), Pages</div>
+          <div class="pub-tags"><span class="tag">Sustainable Geotechnology</span></div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <div class="pub-year">2024</div>
+        <div class="pub-content">
+          <h4>Publication title — to be updated</h4>
+          <div class="pub-authors">Author A, <strong>Yi Y</strong>, Author C</div>
+          <div class="pub-venue">Journal Name, Vol(Issue), Pages</div>
+          <div class="pub-tags"><span class="tag">Carbonation</span><span class="tag">CO₂ Sequestration</span></div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <div class="pub-year">2023</div>
+        <div class="pub-content">
+          <h4>Publication title — to be updated</h4>
+          <div class="pub-authors"><strong>Yi Y</strong>, Author B</div>
+          <div class="pub-venue">Journal Name, Vol(Issue), Pages</div>
+          <div class="pub-tags"><span class="tag">Coastal Materials</span><span class="tag">Marine Geotechnology</span></div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <div class="pub-year">2023</div>
+        <div class="pub-content">
+          <h4>Publication title — to be updated</h4>
+          <div class="pub-authors">Author A, <strong>Yi Y</strong></div>
+          <div class="pub-venue">Journal Name, Vol(Issue), Pages</div>
+          <div class="pub-tags"><span class="tag">Waste Treatment</span><span class="tag">Soil Stabilisation</span></div>
+        </div>
+      </li>
+      <li class="pub-item">
+        <div class="pub-year">2022</div>
+        <div class="pub-content">
+          <h4>Publication title — to be updated</h4>
+          <div class="pub-authors"><strong>Yi Y</strong>, Author B, Author C</div>
+          <div class="pub-venue">Journal Name, Vol(Issue), Pages</div>
+          <div class="pub-tags"><span class="tag">Deep Soil Mixing</span></div>
+        </div>
+      </li>
+    </ul>
+    <p class="pub-more">
+      Full list: <a href="https://scholar.google.com/citations?user=m9twpBIAAAAJ" target="_blank">Google Scholar</a> &nbsp;·&nbsp; <a href="https://dr.ntu.edu.sg/cris/rp/rp01036" target="_blank">DR-NTU</a>
+    </p>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">News</div>
+      <h2 class="section-title">Latest News</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="news-grid">
+      <div class="news-card"><div class="news-date">2025</div><h4>News item — to be updated</h4><p>Add your latest research news, awards, and group updates here.</p></div>
+      <div class="news-card"><div class="news-date">2025</div><h4>News item — to be updated</h4><p>Add your latest research news, awards, and group updates here.</p></div>
+      <div class="news-card"><div class="news-date">2025</div><h4>News item — to be updated</h4><p>Add your latest research news, awards, and group updates here.</p></div>
+      <div class="news-card"><div class="news-date">2024</div><h4>News item — to be updated</h4><p>Add your latest research news, awards, and group updates here.</p></div>
+      <div class="news-card"><div class="news-date">2024</div><h4>News item — to be updated</h4><p>Add your latest research news, awards, and group updates here.</p></div>
+      <div class="news-card"><div class="news-date">2024</div><h4>News item — to be updated</h4><p>Add your latest research news, awards, and group updates here.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">Contact</div>
+      <h2 class="section-title">Get in Touch</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-desc">We welcome motivated students and researchers with interests in sustainable geotechnology, ground improvement, and geo-environmental engineering. International collaborations are always welcome.</p>
+        <ul class="contact-info-list">
+          <li><span class="ci-label">Address</span><span class="ci-value">School of Civil and Environmental Engineering, NTU, 50 Nanyang Avenue, Singapore 639798</span></li>
+          <li><span class="ci-label">Email</span><span class="ci-value"><a href="mailto:yiyaolin@ntu.edu.sg">yiyaolin@ntu.edu.sg</a></span></li>
+          <li><span class="ci-label">Profile</span><span class="ci-value"><a href="https://dr.ntu.edu.sg/cris/rp/rp01036" target="_blank">DR-NTU Academic Profile ↗</a></span></li>
+          <li><span class="ci-label">School</span><span class="ci-value">School of Civil and Environmental Engineering · NTU Singapore</span></li>
+        </ul>
+      </div>
+      <div class="join-box">
+        <h3>Prospective Students</h3>
+        <p>We are looking for motivated PhD students and postdoctoral researchers with backgrounds in civil/geotechnical engineering, materials science, or environmental engineering.</p>
+        <p>Please send your CV and a brief research interest statement to Dr. Yi. Subject line: "Application – [Name] – [Position]".</p>
+        <a href="mailto:yiyaolin@ntu.edu.sg?subject=Application – [Name] – [Position]" class="btn btn-white">Send Application</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Yi Research Group · School of Civil and Environmental Engineering · Nanyang Technological University, Singapore &nbsp;·&nbsp; <a href="https://pages.cloudflare.com" target="_blank">Cloudflare Pages</a></p>
+</footer>
+
+</body>
+</html>
