@@ -110,6 +110,14 @@ a { color: inherit; }
   letter-spacing: -0.01em;
 }
 
+.section-note {
+  margin: -12px 0 24px;
+  color: var(--muted);
+  text-align: left;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
 p {
   margin: 0 0 18px;
   color: var(--soft);

@@ -63,12 +63,18 @@
       const image = card.querySelector(".person-image");
       if (!baseName || !image) return;
 
+      const candidates = [];
+      extensions.forEach(function (extension) {
+        candidates.push("images/" + baseName + "." + extension);
+        candidates.push("images/" + baseName.toLowerCase() + "." + extension);
+      });
+
       let index = 0;
 
       function tryNext() {
-        if (index >= extensions.length) return;
+        if (index >= candidates.length) return;
 
-        const candidate = "images/" + baseName + "." + extensions[index];
+        const candidate = candidates[index];
         index += 1;
 
         const probe = new Image();
