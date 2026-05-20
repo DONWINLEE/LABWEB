@@ -213,13 +213,14 @@ p {
 
 .faculty {
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 46px;
-  align-items: start;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 38px;
+  align-items: stretch;
 }
 
 .photo {
   width: 100%;
+  max-width: 230px;
   border: 1px solid var(--line);
   background: #f3f4f5;
 }
@@ -227,8 +228,13 @@ p {
 .photo img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 5;
+  height: 100%;
+  min-height: 100%;
   object-fit: cover;
+}
+
+.profile-text {
+  max-width: 820px;
 }
 
 .person-grid {
@@ -334,7 +340,7 @@ p {
   .masthead h1 { font-size: 26px; }
   .subtitle { font-size: 14px; }
   .nav { grid-template-columns: repeat(2, 1fr); margin-bottom: 44px; }
-  .faculty { grid-template-columns: 1fr; }
+  .faculty { grid-template-columns: 1fr; gap: 24px; }
   .person { grid-template-columns: 92px 1fr; min-height: 112px; column-gap: 16px; }
   .photo { max-width: 230px; margin: 0 auto; }
   .notice-table { font-size: 14px; }
